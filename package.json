@@ -1,0 +1,39 @@
+{
+  "name": "snap-to-emotion",
+  "productName": "Snap to Emotion",
+  "description": "Capture Emotion from Image",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Bhob Rainey <info@bhobrainey.com>",
+  "copyright": "© 2017, Bhob Rainey",
+  "homepage": "http://localhost:3000",
+  "main": "app/index.jsx",
+  "scripts": {
+    "dev": "concurrently \"http-server -a localhost -p 3000\" \"webpack -d --watch\"",
+    "build": "webpack -p"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "highcharts": "^6.0.4",
+    "jquery": "^3.2.1",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.2.0",
+    "react-highcharts": "^15.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.5.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.6",
+    "http-server": "^0.10.0",
+    "open-browser-webpack-plugin": "0.0.5",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0"
+  },
+  "license": "ISC"
+}

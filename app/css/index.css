@@ -1,0 +1,174 @@
+#app {
+    max-width: 480px;
+    margin: 1em auto;
+}
+.snap-container {
+    position: relative;
+}
+.snap-container video,
+.snap-container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 2;
+}
+.snap-container canvas {
+    z-index: 3;
+}
+.snap-snap, 
+.snap-submit {
+    position: absolute;
+    bottom: 0;
+    margin: 0.5em 1em;
+    z-index: 4;
+}
+.snap-snap {
+    left: 0;
+}
+.snap-submit {
+    right: 0;
+}
+
+.emo-form label {
+    display: block;
+}
+
+/* Clear Range Styles */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+}
+
+/* Range Thumbs */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000;
+  height: 8px;
+  width: 8px;
+  background: #000;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000;
+  height: 8px;
+  width: 8px;
+  background: #000;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000;
+  height: 8px;
+  width: 8px;
+  background: #000;
+  cursor: pointer;
+}
+
+/* Range Tracks */
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #000;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #000;
+}
+
+input[type=range]::-ms-track {
+  width: 99%; /* Otherwise the right border disappears */
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #000;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+}
+
+input[type=range]::-ms-fill-upper {
+    background: #eee;
+}
+
+/* Individual Track Colors */
+input[type=range].Anger::-webkit-slider-runnable-track {
+    background: red;
+}
+input[type=range].Anger::-moz-range-track {
+    background: red;
+}
+input[type=range].Anger::-ms-fill-lower {
+    background: red;
+}
+
+input[type=range].Fear::-webkit-slider-runnable-track {
+    background: green;
+}
+input[type=range].Fear::-moz-range-track {
+    background: green;
+}
+input[type=range].Fear::-ms-fill-lower {
+    background: green;
+}
+
+input[type=range].Happiness::-webkit-slider-runnable-track {
+    background: yellow;
+}
+input[type=range].Happiness::-moz-range-track {
+    background: yellow;
+}
+input[type=range].Happiness::-ms-fill-lower {
+    background: yellow;
+}
+
+input[type=range].Neutrality::-webkit-slider-runnable-track {
+    background: mediumslateblue;
+}
+input[type=range].Neutrality::-moz-range-track {
+    background: mediumslateblue;
+}
+input[type=range].Neutrality::-ms-fill-lower {
+    background: mediumslateblue;
+}
+
+input[type=range].Sadness::-webkit-slider-runnable-track {
+    background: grey;
+}
+input[type=range].Sadness::-moz-range-track {
+    background: grey;
+}
+input[type=range].Sadness::-ms-fill-lower {
+    background: grey;
+}
+
+input[type=range].Surprise::-webkit-slider-runnable-track {
+    background: pink;
+}
+input[type=range].Surprise::-moz-range-track {
+    background: pink;
+}
+input[type=range].Surprise::-ms-fill-lower {
+    background: pink;
+}

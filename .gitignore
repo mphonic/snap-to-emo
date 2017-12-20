@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+Thumbs.db
+*.log
+
+/app/credentials
+
+/build/bundle.js
+/build/**/*.map
