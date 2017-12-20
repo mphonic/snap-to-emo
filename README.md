@@ -4,25 +4,22 @@ This is a prototype Node.js and React app that captures an image from your built
 
 You'll need [Node.js](https://nodejs.org), and then you'll do some familiar things:
 
-`
 
+```
 git clone https://github.com/mphonic/snap-to-emo.git
 
 cd snap-to-emo
 
 npm install
-
-`
+```
 
 Having done that, you'll need to [get an Azure account and subscription keys to the Emotion API](https://azure.microsoft.com/en-us/try/cognitive-services/). These are both available at free tiers.
 
 After signing up, copy the subscription key and URL you receive into /app/credentials/emotion-api.js. Then, run
 
-`
-
+```
 npm run dev
-
-`
+```
 
 A tab should open in your web browser at http://localhost:3000/build. If it doesn't, enter the URL manually in your browser (or check your terminal for error messages).
 
