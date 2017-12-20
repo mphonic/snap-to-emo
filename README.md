@@ -15,7 +15,7 @@ npm install
 
 Having done that, you'll need to [get an Azure account and subscription keys to the Emotion API](https://azure.microsoft.com/en-us/try/cognitive-services/). These are both available at free tiers.
 
-After signing up, copy the subscription key and URL you receive into /app/credentials/emotion-api.js. Then, run
+After signing up, create a copy of /app/credentials/emotion-api-default.js in the same folder, and name it emotion-api.js. Copy the subscription key and URL you receive into emotion-api.js. Then, run
 
 ```
 npm run dev
