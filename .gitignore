@@ -3,7 +3,7 @@ node_modules
 Thumbs.db
 *.log
 
-/app/credentials
+/app/credentials/emotion-api.js
 
 /build/bundle.js
 /build/**/*.map
