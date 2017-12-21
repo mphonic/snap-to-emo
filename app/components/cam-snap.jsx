@@ -14,6 +14,7 @@ class CamSnap extends React.Component {
             streaming: false,
             showSubmit: false,
             disableSubmit: false,
+            gotNoFace: false,
             score: AppConfig.initScore
         };
         this.video = null;
@@ -61,7 +62,7 @@ class CamSnap extends React.Component {
 
     send() {
         let data = this.canvas.toDataURL('image/jpeg');
-
+        this.setState({ disableSubmit: true });
         fetch(data)
             .then(res => res.blob())
             .then(blobData => {
@@ -77,17 +78,17 @@ class CamSnap extends React.Component {
                 })
                     .done(data => {
                         if (data.length < 1) {
-                            console.log('No data returned');
+                            this.setState({ gotNoFace: true });
                             return;
                         }
                         let results = data[0];
                         let face = results.faceRectangle;
-                        this.setState({ score: results.scores, disableSubmit: true });
+                        this.setState({ score: results.scores });
                         this.drawFaceRectangle(face);
-                        console.log(this.state.score);
                     })
                     .fail(err => {
                         console.log(JSON.stringify(err));
+                        this.setState({ gotNoFace: true });
                     })
             });
     }
@@ -96,23 +97,25 @@ class CamSnap extends React.Component {
         if (!this.state.streaming) return false;
         let context = this.canvas.getContext('2d');
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.setState({ showSubmit: false });
+        this.setState({ showSubmit: false, gotNoFace: false });
         this.hasCleared = true;
     }
 
     drawFaceRectangle(face) {
         let context = this.canvas.getContext('2d');
         context.beginPath();
-        context.strokeStyle = "#ff0000";
+        context.strokeStyle = "orange";
         context.lineWidth = "5";
         context.rect(face.left, face.top, face.width, face.height);
         context.stroke();
     }
 
     render() {
-        let snapButton, submitButton, snapText, form;
+        let snapButton, submitButton, snapText, form, faceError;
         if (this.state.showSubmit) {
-            submitButton = <Button className="snap-submit" bsStyle="success" onClick={() => this.send()} disabled={this.state.disableSubmit}>Get Emotion Scores</Button>
+            if (!this.state.gotNoFace && !this.state.gotAFace) {
+                submitButton = <Button className="snap-submit" bsStyle="success" onClick={() => this.send()} disabled={this.state.disableSubmit}>Get Emotion Scores</Button>
+            }
             snapText = 'Take a Different Picture';
         } else {
             submitButton = '';
@@ -121,9 +124,9 @@ class CamSnap extends React.Component {
         if (this.state.streaming) {
             snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.showSubmit) ? this.clear() : this.snap()}>{snapText}</Button>
             form = <EmoForm score={this.state.score} reset={this.hasCleared} />
-        } else {
-            snapButton = '';
-            form = '';
+        }
+        if (this.state.gotNoFace) {
+            faceError = <div className="snap-error" onClick={() => this.clear()}>No face was detected. Try again?</div>
         }
         return (
             <div className="cam-snap">
@@ -133,6 +136,7 @@ class CamSnap extends React.Component {
                     <canvas ref={(ref) => { this.canvas = ref; }}>
                     </canvas>
                     {submitButton}
+                    {faceError}
                 </div>
                 {form}
             </div>
