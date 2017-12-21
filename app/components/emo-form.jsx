@@ -2,6 +2,7 @@ import React from 'react';
 import EmoSlider from './emo-slider.jsx';
 import EmoChart from './emo-chart.jsx';
 import { Button, Row, Col } from 'react-bootstrap';
+import $ from 'jquery';
 
 const AppConfig = require('../config.js');
 
@@ -41,6 +42,9 @@ class EmoForm extends React.Component {
         this.setState({ hasSubmitted: true });
         data.emos.push(scores);
         this.saveValues(data);
+        $('html, body').animate({
+            scrollTop: $('.emo-stats').offset().top
+        }, 500);
     }
 
     getStoredValues() {
@@ -55,6 +59,9 @@ class EmoForm extends React.Component {
     clearSavedValues() {
         localStorage.setItem('emos', '');
         this.setState({ hasSubmitted: false });
+        $('html, body').animate({
+            scrollTop: $('.cam-snap').offset().top
+        }, 500);
     }
 
     render() {
@@ -68,7 +75,6 @@ class EmoForm extends React.Component {
                 </div>
             );
         } else {
-            chart = '';
             let sliders = [],
                 scores = this.props.score;
             for (let key in scores) {

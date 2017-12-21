@@ -79,6 +79,9 @@ class CamSnap extends React.Component {
                     .done(data => {
                         if (data.length < 1) {
                             this.setState({ gotNoFace: true });
+                            $('html, body').animate({
+                                scrollTop: $('.cam-snap').offset().top
+                            }, 500);
                             return;
                         }
                         let results = data[0];
@@ -132,7 +135,7 @@ class CamSnap extends React.Component {
         if (this.state.gotNoFace) {
             faceError = <div className="snap-error" onClick={() => this.clear()}>No face was detected. Try again?</div>
         }
-        
+
         return (
             <div className="cam-snap">
                 <div className="snap-container" ref={(ref) => { this.snapContainer = ref; }}>

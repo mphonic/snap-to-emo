@@ -73,7 +73,7 @@ class EmoChart extends React.Component {
         let hasData = this.makeDatasets();
         let output = (hasData)?<ReactHighcharts config={this.config} />:'';
         return (
-            <div>{output}</div>
+            <div className="emo-chart">{output}</div>
         );
     }
 }
