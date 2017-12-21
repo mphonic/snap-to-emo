@@ -1,7 +1,9 @@
 import React from 'react';
 import EmoSlider from './emo-slider.jsx';
 import EmoChart from './emo-chart.jsx';
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
+
+const AppConfig = require('../config.js');
 
 class EmoForm extends React.Component {
     
@@ -10,14 +12,7 @@ class EmoForm extends React.Component {
         this.state = {
             hasSubmitted: false
         }
-        this.labelMap = {
-            anger: 'Anger',
-            fear: 'Fear',
-            happiness: 'Happiness',
-            neutral: 'Neutrality',
-            sadness: 'Sadness',
-            surprise: 'Surprise'
-        }
+        this.labelMap = AppConfig.emotionStringMap;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.clearSavedValues = this.clearSavedValues.bind(this);
     }
@@ -31,21 +26,18 @@ class EmoForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         
-        var scores = {
-            anger: this.anger.getValue(),
-            fear: this.fear.getValue(),
-            happiness: this.happiness.getValue(),
-            neutral: this.neutral.getValue(),
-            sadness: this.sadness.getValue(),
-            surprise: this.surprise.getValue(),
-            date: Date.now()
-        };
+        let scores = { date: Date.now() };
+        AppConfig.emotions.forEach((i) => {
+            scores[i] = this[i].getValue();
+        });
+
         let data = this.getStoredValues();
         if (data) {
             data = JSON.parse(data);
         } else {
             data = { "emos": [] }
         }
+        
         this.setState({ hasSubmitted: true });
         data.emos.push(scores);
         this.saveValues(data);
@@ -88,7 +80,14 @@ class EmoForm extends React.Component {
             }
             form = (
                 <form className="emo-form" onSubmit={this.handleSubmit}>
-                    {sliders}
+                    <Row className="show-grid">
+                        <Col sm={12} md={6}>
+                            {sliders.slice(0, sliders.length / 2)}
+                        </Col>
+                        <Col sm={12} md={6}>
+                            {sliders.slice(sliders.length / 2)}
+                        </Col>
+                    </Row>
                     <Button bsStyle="primary" onClick={this.handleSubmit} disabled={this.state.hasSubmitted}>Save Values</Button>
                 </form>
             );

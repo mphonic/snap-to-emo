@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import EmoForm from './emo-form.jsx';
 
 const EMO_CREDENTIALS = require('../credentials/emotion-api.js');
+const AppConfig = require('../config.js');
 
 class CamSnap extends React.Component {
 
@@ -13,20 +14,11 @@ class CamSnap extends React.Component {
             streaming: false,
             showSubmit: false,
             disableSubmit: false,
-            score: {
-                anger: 0,
-                contempt: 0,
-                disgust: 0,
-                fear: 0,
-                happiness: 0,
-                neutral: 0,
-                sadness: 0,
-                surprise: 0
-            }
+            score: AppConfig.initScore
         };
         this.video = null;
         this.canvas = null;
-        this.destWidth = 480;
+        this.destWidth = Math.min(window.innerWidth, 960);
     }
 
     componentDidMount() {

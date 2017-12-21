@@ -3,18 +3,13 @@ import React from 'react';
 import highcharts from 'highcharts';
 import ReactHighcharts from 'react-highcharts';
 
+const AppConfig = require('../config.js');
+
 class EmoChart extends React.Component {
     
     constructor(props) {
         super(props);
-        this.dataItems = [
-            'anger',
-            'fear',
-            'happiness',
-            'neutral',
-            'sadness',
-            'surprise'
-        ];
+        this.dataItems = AppConfig.emotions;
     }
 
     initDatasets() {
@@ -52,8 +47,10 @@ class EmoChart extends React.Component {
         if (!data.emos.length) return false;
         let colorMap = {
             anger: '#FF0000',
+            contempt: '#000000',
+            disgust: 'yellow',
             fear: '#00FF00',
-            happiness: 'yellow',
+            happiness: 'orange',
             neutral: 'mediumslateblue',
             sadness: 'grey',
             surpise: 'pink'

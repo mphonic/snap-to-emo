@@ -1,5 +1,5 @@
 #app {
-    max-width: 480px;
+    max-width: 960px;
     margin: 1em auto;
 }
 .snap-container {
@@ -123,6 +123,26 @@ input[type=range].Anger::-ms-fill-lower {
     background: red;
 }
 
+input[type=range].Contempt::-webkit-slider-runnable-track {
+    background: #000;
+}
+input[type=range].Contempt::-moz-range-track {
+    background: #000;
+}
+input[type=range].Contempt::-ms-fill-lower {
+    background: #000;
+}
+
+input[type=range].Disgust::-webkit-slider-runnable-track {
+    background: yellow;
+}
+input[type=range].Disgust::-moz-range-track {
+    background: yellow;
+}
+input[type=range].Disgust::-ms-fill-lower {
+    background: yellow;
+}
+
 input[type=range].Fear::-webkit-slider-runnable-track {
     background: green;
 }
@@ -134,13 +154,13 @@ input[type=range].Fear::-ms-fill-lower {
 }
 
 input[type=range].Happiness::-webkit-slider-runnable-track {
-    background: yellow;
+    background: orange;
 }
 input[type=range].Happiness::-moz-range-track {
-    background: yellow;
+    background: orange;
 }
 input[type=range].Happiness::-ms-fill-lower {
-    background: yellow;
+    background: orange;
 }
 
 input[type=range].Neutrality::-webkit-slider-runnable-track {
