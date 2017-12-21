@@ -37,7 +37,7 @@ class EmoForm extends React.Component {
         } else {
             data = { "emos": [] }
         }
-        
+
         this.setState({ hasSubmitted: true });
         data.emos.push(scores);
         this.saveValues(data);
@@ -93,7 +93,7 @@ class EmoForm extends React.Component {
             );
         }
         return (
-            <div>
+            <div className="emo-stats">
                 {form}
                 {chart}
             </div>

@@ -85,6 +85,9 @@ class CamSnap extends React.Component {
                         let face = results.faceRectangle;
                         this.setState({ score: results.scores });
                         this.drawFaceRectangle(face);
+                        $('html, body').animate({
+                            scrollTop: $('.emo-stats').offset().top
+                        }, 500);
                     })
                     .fail(err => {
                         console.log(JSON.stringify(err));
@@ -112,6 +115,7 @@ class CamSnap extends React.Component {
 
     render() {
         let snapButton, submitButton, snapText, form, faceError;
+
         if (this.state.showSubmit) {
             if (!this.state.gotNoFace && !this.state.gotAFace) {
                 submitButton = <Button className="snap-submit" bsStyle="success" onClick={() => this.send()} disabled={this.state.disableSubmit}>Get Emotion Scores</Button>
@@ -128,6 +132,7 @@ class CamSnap extends React.Component {
         if (this.state.gotNoFace) {
             faceError = <div className="snap-error" onClick={() => this.clear()}>No face was detected. Try again?</div>
         }
+        
         return (
             <div className="cam-snap">
                 <div className="snap-container" ref={(ref) => { this.snapContainer = ref; }}>

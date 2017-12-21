@@ -46,6 +46,9 @@
     cursor: pointer;
 }
 
+.emo-stats {
+    margin-top: 8px;
+}
 .emo-form label {
     display: block;
 }
