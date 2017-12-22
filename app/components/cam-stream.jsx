@@ -120,7 +120,7 @@ class CamStream extends React.Component {
         }
         if (this.state.streaming) {
             snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.streamToApi) ? this.stop() : this.start()}>{snapText}</Button>
-            form = <EmoForm score={this.state.score} />
+            form = <EmoForm score={this.state.score} isStreaming={this.state.streamToApi} />
         }
 
         return (

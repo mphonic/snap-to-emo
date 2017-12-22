@@ -39,12 +39,14 @@ class EmoForm extends React.Component {
             data = { "emos": [] }
         }
 
-        this.setState({ hasSubmitted: true });
         data.emos.push(scores);
         this.saveValues(data);
-        $('html, body').animate({
-            scrollTop: $('.emo-stats').offset().top
-        }, 500);
+        if (!this.props.isStreaming) {
+            this.setState({ hasSubmitted: true });
+            $('html, body').animate({
+                scrollTop: $('.emo-stats').offset().top
+            }, 500);
+        }
     }
 
     getStoredValues() {
