@@ -54,7 +54,6 @@ class CamStream extends React.Component {
         let context = this.canvas.getContext('2d');
         context.drawImage(this.video, 0, 0, this.destWidth, this.destHeight);
         this.send();
-        this.setState({ streamToApi: true });
     }
 
     start() {
@@ -120,7 +119,7 @@ class CamStream extends React.Component {
         }
         if (this.state.streaming) {
             snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.streamToApi) ? this.stop() : this.start()}>{snapText}</Button>
-            form = <EmoForm score={this.state.score} isStreaming={this.state.streamToApi} />
+            form = <EmoForm score={this.state.score} isStreaming={this.state.streamToApi} streamingParent={true} />
         }
 
         return (

@@ -13,6 +13,7 @@ class EmoForm extends React.Component {
         this.state = {
             hasSubmitted: false
         }
+        this.saveOnRender = false;
         this.labelMap = AppConfig.emotionStringMap;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.clearSavedValues = this.clearSavedValues.bind(this);
@@ -22,10 +23,15 @@ class EmoForm extends React.Component {
         if (newProps.reset) {
             this.setState({ hasSubmitted: false });
         }
+        if (newProps.isStreaming && JSON.stringify(newProps.score) !== JSON.stringify(this.props.score)) {
+            setTimeout((e) => { this.handleSubmit(e) }, 150);
+        }
     }
 
     handleSubmit(e) {
-        e.preventDefault();
+        if (e) {
+            e.preventDefault();
+        }
         
         let scores = { date: Date.now() };
         AppConfig.emotions.forEach((i) => {
@@ -42,11 +48,15 @@ class EmoForm extends React.Component {
         data.emos.push(scores);
         this.saveValues(data);
         if (!this.props.isStreaming) {
-            this.setState({ hasSubmitted: true });
-            $('html, body').animate({
-                scrollTop: $('.emo-stats').offset().top
-            }, 500);
+            this.showChart();
         }
+    }
+
+    showChart() {
+        this.setState({ hasSubmitted: true });
+        $('html, body').animate({
+            scrollTop: $('.emo-stats').offset().top
+        }, 500);
     }
 
     getStoredValues() {
@@ -78,13 +88,19 @@ class EmoForm extends React.Component {
             );
         } else {
             let sliders = [],
-                scores = this.props.score;
+                scores = this.props.score,
+                submitButton;
             for (let key in scores) {
                 if (this.labelMap[key]) {
                     sliders.push(
                         <EmoSlider ref={(ref) => this[key] = ref} label={this.labelMap[key]} emoValue={scores[key]} key={key} />
                     );
                 }
+            }
+            if (!this.props.isStreaming && !this.props.streamingParent) {
+                submitButton = <Button bsStyle="primary" onClick={this.handleSubmit} disabled={this.state.hasSubmitted}>Save Values</Button>
+            } else if (!this.props.isStreaming) {
+                submitButton = <Button bsStyle="primary" onClick={() => this.showChart()}>View Chart</Button>
             }
             form = (
                 <form className="emo-form" onSubmit={this.handleSubmit}>
@@ -96,7 +112,7 @@ class EmoForm extends React.Component {
                             {sliders.slice(sliders.length / 2)}
                         </Col>
                     </Row>
-                    <Button bsStyle="primary" onClick={this.handleSubmit} disabled={this.state.hasSubmitted}>Save Values</Button>
+                    {submitButton}
                 </form>
             );
         }
