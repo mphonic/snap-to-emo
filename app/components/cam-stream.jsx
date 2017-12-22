@@ -91,7 +91,7 @@ class CamStream extends React.Component {
                         this.setState({ score: results.scores });
                         this.drawFaceRectangle(face);
                         if (this.state.streamToApi) {
-                            setTimeout(() => { this.snap(); }, 200);
+                            setTimeout(() => { this.snap(); }, 1500);
                         }
                     })
                     .fail(err => {
