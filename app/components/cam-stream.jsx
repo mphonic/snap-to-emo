@@ -6,14 +6,13 @@ import EmoForm from './emo-form.jsx';
 const EMO_CREDENTIALS = require('../credentials/emotion-api.js');
 const AppConfig = require('../config.js');
 
-class CamSnap extends React.Component {
+class CamStream extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             streaming: false,
-            showSubmit: false,
-            disableSubmit: false,
+            streamToApi: false,
             gotNoFace: false,
             score: AppConfig.initScore
         };
@@ -52,17 +51,23 @@ class CamSnap extends React.Component {
 
     snap() {
         if (!this.state.streaming) return;
-        if (this.state.showSubmit) {
-            this.clear();
-        }
         let context = this.canvas.getContext('2d');
         context.drawImage(this.video, 0, 0, this.destWidth, this.destHeight);
-        this.setState({ showSubmit: true, disableSubmit: false });
+        this.send();
+        this.setState({ streamToApi: true });
+    }
+
+    start() {
+        this.setState({ streamToApi: true });
+        this.snap();
+    }
+
+    stop() {
+        this.setState({ streamToApi: false });
     }
 
     send() {
         let data = this.canvas.toDataURL('image/jpeg');
-        this.setState({ disableSubmit: true });
         fetch(data)
             .then(res => res.blob())
             .then(blobData => {
@@ -79,32 +84,21 @@ class CamSnap extends React.Component {
                     .done(data => {
                         if (data.length < 1) {
                             this.setState({ gotNoFace: true });
-                            $('html, body').animate({
-                                scrollTop: $('.cam-snap').offset().top
-                            }, 500);
                             return;
                         }
                         let results = data[0];
                         let face = results.faceRectangle;
                         this.setState({ score: results.scores });
                         this.drawFaceRectangle(face);
-                        $('html, body').animate({
-                            scrollTop: $('.emo-stats').offset().top
-                        }, 500);
+                        if (this.state.streamToApi) {
+                            setTimeout(() => { this.snap(); }, 200);
+                        }
                     })
                     .fail(err => {
                         console.log(JSON.stringify(err));
                         this.setState({ gotNoFace: true });
                     })
             });
-    }
-
-    clear() {
-        if (!this.state.streaming) return false;
-        let context = this.canvas.getContext('2d');
-        context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.setState({ showSubmit: false, gotNoFace: false });
-        this.hasCleared = true;
     }
 
     drawFaceRectangle(face) {
@@ -117,23 +111,16 @@ class CamSnap extends React.Component {
     }
 
     render() {
-        let snapButton, submitButton, snapText, form, faceError;
+        let snapButton, snapText, form;
 
-        if (this.state.showSubmit) {
-            if (!this.state.gotNoFace && !this.state.gotAFace) {
-                submitButton = <Button className="snap-submit" bsStyle="success" onClick={() => this.send()} disabled={this.state.disableSubmit}>Get Emotion Scores</Button>
-            }
-            snapText = 'Take a Different Picture';
+        if (this.state.streamToApi) {
+            snapText = 'Stop Streaming';
         } else {
-            submitButton = '';
-            snapText = 'Take Picture';
+            snapText = 'Start Streaming';
         }
         if (this.state.streaming) {
-            snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.showSubmit) ? this.clear() : this.snap()}>{snapText}</Button>
-            form = <EmoForm score={this.state.score} reset={this.hasCleared} />
-        }
-        if (this.state.gotNoFace) {
-            faceError = <div className="snap-error" onClick={() => this.clear()}>No face was detected. Try again?</div>
+            snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.streamToApi) ? this.stop() : this.start()}>{snapText}</Button>
+            form = <EmoForm score={this.state.score} />
         }
 
         return (
@@ -141,10 +128,8 @@ class CamSnap extends React.Component {
                 <div className="snap-container" ref={(ref) => { this.snapContainer = ref; }}>
                     <video ref={(ref) => { this.video = ref; }}>Video stream not available. Use sliders manually.</video>
                     {snapButton}
-                    <canvas ref={(ref) => { this.canvas = ref; }}>
+                    <canvas className="set-behind" ref={(ref) => { this.canvas = ref; }}>
                     </canvas>
-                    {submitButton}
-                    {faceError}
                 </div>
                 {form}
             </div>
@@ -152,4 +137,4 @@ class CamSnap extends React.Component {
     }
 }
 
-module.exports = CamSnap;
+module.exports = CamStream;

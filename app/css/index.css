@@ -18,6 +18,10 @@
 .snap-container canvas {
     z-index: 3;
 }
+.snap-container canvas.set-behind {
+    z-index: 1;
+}
+
 .snap-snap, 
 .snap-submit {
     position: absolute;
