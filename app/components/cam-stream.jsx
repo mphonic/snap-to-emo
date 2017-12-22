@@ -18,6 +18,7 @@ class CamStream extends React.Component {
         };
         this.video = null;
         this.canvas = null;
+        this.governor = null;
         this.destWidth = Math.min(window.innerWidth, 960);
     }
 
@@ -62,6 +63,7 @@ class CamStream extends React.Component {
     }
 
     stop() {
+        clearTimeout(this.governor);
         this.setState({ streamToApi: false });
     }
 
@@ -90,7 +92,7 @@ class CamStream extends React.Component {
                         this.setState({ score: results.scores });
                         this.drawFaceRectangle(face);
                         if (this.state.streamToApi) {
-                            setTimeout(() => { this.snap(); }, 1500);
+                            this.governor = setTimeout(() => { this.snap(); }, 1500);
                         }
                     })
                     .fail(err => {
