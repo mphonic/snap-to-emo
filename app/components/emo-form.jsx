@@ -79,7 +79,7 @@ class EmoForm extends React.Component {
     render() {
         let form, chart;
         
-        if (this.state.hasSubmitted) {
+        if (this.state.hasSubmitted && !this.props.isStreaming) {
             chart = (
                 <div>
                     <EmoChart />
