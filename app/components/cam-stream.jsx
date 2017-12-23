@@ -5,6 +5,7 @@ import EmoForm from './emo-form.jsx';
 
 const EMO_CREDENTIALS = require('../credentials/emotion-api.js');
 const AppConfig = require('../config.js');
+const noFaceLimit = 7;
 
 class CamStream extends React.Component {
 
@@ -19,6 +20,7 @@ class CamStream extends React.Component {
         this.video = null;
         this.canvas = null;
         this.governor = null;
+        this.noFaceCount = 0;
         this.destWidth = Math.min(window.innerWidth, 960);
     }
 
@@ -58,7 +60,8 @@ class CamStream extends React.Component {
     }
 
     start() {
-        this.setState({ streamToApi: true });
+        this.setState({ streamToApi: true, gotNoFace: false });
+        this.noFaceCount = 0;
         this.snap();
     }
 
@@ -84,13 +87,18 @@ class CamStream extends React.Component {
                 })
                     .done(data => {
                         if (data.length < 1) {
-                            this.setState({ gotNoFace: true });
-                            return;
+                            this.noFaceCount++;
+                            if (this.noFaceCount >= noFaceLimit) {
+                                this.stop();
+                                this.setState({ gotNoFace: true });
+                            }
+                        } else {
+                            let results = data[0];
+                            let face = results.faceRectangle;
+                            this.setState({ score: results.scores });
+                            this.drawFaceRectangle(face);
+                            this.noFaceCount = 0;
                         }
-                        let results = data[0];
-                        let face = results.faceRectangle;
-                        this.setState({ score: results.scores });
-                        this.drawFaceRectangle(face);
                         if (this.state.streamToApi) {
                             this.governor = setTimeout(() => { this.snap(); }, 1500);
                         }
@@ -112,7 +120,7 @@ class CamStream extends React.Component {
     }
 
     render() {
-        let snapButton, snapText, form;
+        let snapButton, snapText, form, faceError;
 
         if (this.state.streamToApi) {
             snapText = 'Stop Streaming';
@@ -123,6 +131,9 @@ class CamStream extends React.Component {
             snapButton = <Button className="snap-snap" bsStyle="primary" onClick={() => (this.state.streamToApi) ? this.stop() : this.start()}>{snapText}</Button>
             form = <EmoForm score={this.state.score} isStreaming={this.state.streamToApi} streamingParent={true} />
         }
+        if (this.state.gotNoFace) {
+            faceError = <div className="snap-error" onClick={() => this.start()}>Haven't detected a face in a while. Resume?</div>
+        }
 
         return (
             <div className="cam-snap">
@@ -131,6 +142,7 @@ class CamStream extends React.Component {
                     {snapButton}
                     <canvas className="set-behind" ref={(ref) => { this.canvas = ref; }}>
                     </canvas>
+                    {faceError}
                 </div>
                 {form}
             </div>
