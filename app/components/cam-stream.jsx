@@ -96,7 +96,7 @@ class CamStream extends React.Component {
                             let results = data[0];
                             let face = results.faceRectangle;
                             this.setState({ score: results.scores });
-                            this.drawFaceRectangle(face);
+                            // this.drawFaceRectangle(face);
                             this.noFaceCount = 0;
                         }
                         if (this.state.streamToApi) {
