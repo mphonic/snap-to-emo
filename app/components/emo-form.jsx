@@ -93,9 +93,9 @@ class EmoForm extends React.Component {
             for (let key in scores) {
                 if (this.labelMap[key]) {
                     sliders.push(
-                        <Col xs={4} sm={3} md={2} key={key}>
+                        <div class="knob-col" key={key}>
                             <EmoKnob ref={(ref) => this[key] = ref} label={this.labelMap[key]} emoValue={scores[key]} key={key} />
-                        </Col>
+                        </div>
                     );
                 }
             }

@@ -20,7 +20,7 @@
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
     "react-highcharts": "^15.0.0",
-    "react-touch-knob": "^0.2.2"
+    "react-touch-knob": "^0.2.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
