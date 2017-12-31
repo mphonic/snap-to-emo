@@ -1,6 +1,10 @@
+body {
+    margin: 0;
+}
 #app {
     max-width: 960px;
-    margin: 1em auto;
+    margin: 0 auto;
+    padding: 1em 0;
 }
 .snap-container {
     position: relative;
@@ -53,163 +57,59 @@
 .emo-stats {
     margin-top: 8px;
 }
+.emo-stats button {
+    display: block;
+    margin: 0 auto;
+}
+.show-grid {
+    padding: 0.25em 0;
+}
 .emo-form label {
     display: block;
-}
-
-/* Clear Range Styles */
-input[type=range] {
-    -webkit-appearance: none;
     width: 100%;
-    background: transparent;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-input[type=range]::-ms-track {
-  width: 100%;
-  cursor: pointer;
-  /* Hides the slider so custom styles can be added */
-  background: transparent; 
-  border-color: transparent;
+.knob {
+    width: 100%;
+    font-size: 36px;
+    line-height: 65%;
+    border-bottom-color: #ccc;
+    border-top-color: blue; 
+}
+.knob.Anger {
+    border-top-color: red;
+}
+.knob.Contempt {
+    border-top-color: black;
+}
+.knob.Disgust {
+    border-top-color: yellow;
+}
+.knob.Fear {
+    border-top-color: green;
+}
+.knob.Happiness {
+    border-top-color: orange;
+}
+.knob.Neutral {
+    border-top-color: mediumslateblue;
+}
+.knob.Sadness {
+    border-top-color: grey;
+}
+.knob.Surprise {
+    border-top-color: pink;
 }
 
-/* Range Thumbs */
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  border: 1px solid #000;
-  height: 8px;
-  width: 8px;
-  background: #000;
-  cursor: pointer;
+@media screen and (max-width: 959px) {
+    #app {
+        padding: 1em;
+    }
 }
-
-input[type=range]::-moz-range-thumb {
-  -webkit-appearance: none;
-  border: 1px solid #000;
-  height: 8px;
-  width: 8px;
-  background: #000;
-  cursor: pointer;
-}
-
-input[type=range]::-ms-thumb {
-  -webkit-appearance: none;
-  border: 1px solid #000;
-  height: 8px;
-  width: 8px;
-  background: #000;
-  cursor: pointer;
-}
-
-/* Range Tracks */
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 10px;
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid #000;
-}
-
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 10px;
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid #000;
-}
-
-input[type=range]::-ms-track {
-  width: 99%; /* Otherwise the right border disappears */
-  height: 10px;
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid #000;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: #2a6495;
-}
-
-input[type=range]::-ms-fill-upper {
-    background: #eee;
-}
-
-/* Individual Track Colors */
-input[type=range].Anger::-webkit-slider-runnable-track {
-    background: red;
-}
-input[type=range].Anger::-moz-range-track {
-    background: red;
-}
-input[type=range].Anger::-ms-fill-lower {
-    background: red;
-}
-
-input[type=range].Contempt::-webkit-slider-runnable-track {
-    background: #000;
-}
-input[type=range].Contempt::-moz-range-track {
-    background: #000;
-}
-input[type=range].Contempt::-ms-fill-lower {
-    background: #000;
-}
-
-input[type=range].Disgust::-webkit-slider-runnable-track {
-    background: yellow;
-}
-input[type=range].Disgust::-moz-range-track {
-    background: yellow;
-}
-input[type=range].Disgust::-ms-fill-lower {
-    background: yellow;
-}
-
-input[type=range].Fear::-webkit-slider-runnable-track {
-    background: green;
-}
-input[type=range].Fear::-moz-range-track {
-    background: green;
-}
-input[type=range].Fear::-ms-fill-lower {
-    background: green;
-}
-
-input[type=range].Happiness::-webkit-slider-runnable-track {
-    background: orange;
-}
-input[type=range].Happiness::-moz-range-track {
-    background: orange;
-}
-input[type=range].Happiness::-ms-fill-lower {
-    background: orange;
-}
-
-input[type=range].Neutrality::-webkit-slider-runnable-track {
-    background: mediumslateblue;
-}
-input[type=range].Neutrality::-moz-range-track {
-    background: mediumslateblue;
-}
-input[type=range].Neutrality::-ms-fill-lower {
-    background: mediumslateblue;
-}
-
-input[type=range].Sadness::-webkit-slider-runnable-track {
-    background: grey;
-}
-input[type=range].Sadness::-moz-range-track {
-    background: grey;
-}
-input[type=range].Sadness::-ms-fill-lower {
-    background: grey;
-}
-
-input[type=range].Surprise::-webkit-slider-runnable-track {
-    background: pink;
-}
-input[type=range].Surprise::-moz-range-track {
-    background: pink;
-}
-input[type=range].Surprise::-ms-fill-lower {
-    background: pink;
+@media screen and (max-width: 650px) {
+    .knob {
+        font-size: 24px;
+    }
 }

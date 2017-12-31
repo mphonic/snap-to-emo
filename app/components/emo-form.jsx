@@ -1,5 +1,5 @@
 import React from 'react';
-import EmoSlider from './emo-slider.jsx';
+import EmoKnob from './emo-knob.jsx';
 import EmoChart from './emo-chart.jsx';
 import { Button, Row, Col } from 'react-bootstrap';
 import $ from 'jquery';
@@ -93,7 +93,9 @@ class EmoForm extends React.Component {
             for (let key in scores) {
                 if (this.labelMap[key]) {
                     sliders.push(
-                        <EmoSlider ref={(ref) => this[key] = ref} label={this.labelMap[key]} emoValue={scores[key]} key={key} />
+                        <Col xs={4} sm={3} md={2} key={key}>
+                            <EmoKnob ref={(ref) => this[key] = ref} label={this.labelMap[key]} emoValue={scores[key]} key={key} />
+                        </Col>
                     );
                 }
             }
@@ -105,12 +107,7 @@ class EmoForm extends React.Component {
             form = (
                 <form className="emo-form" onSubmit={this.handleSubmit}>
                     <Row className="show-grid">
-                        <Col sm={12} md={6}>
-                            {sliders.slice(0, sliders.length / 2)}
-                        </Col>
-                        <Col sm={12} md={6}>
-                            {sliders.slice(sliders.length / 2)}
-                        </Col>
+                        {sliders}
                     </Row>
                     {submitButton}
                 </form>
