@@ -113,6 +113,9 @@ body {
     }
 }
 @media screen and (max-width: 650px) {
+    .knob-col {
+        width: 25%;
+    }
     .knob {
         font-size: 18px;
     }
